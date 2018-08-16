@@ -11,13 +11,6 @@
 <link rel="stylesheet" href="../css/style.css" type="text/css"	media="all" />
 <link rel="stylesheet" href="../css/member.css" type="text/css"	media="all" />
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-
-  <script
-          src="https://code.jquery.com/jquery-1.12.4.js"
-          integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
-          crossorigin="anonymous">
-  </script>
-
 <style>
 #confirmCheck{ visibility:hidden;}
 
@@ -46,7 +39,7 @@ th{
 			<div id="content">
 				<div class="JoinPage">
 					<br>
-					<h1>회원가입</h1>
+					<h1>회원정보수정</h1>
 					<br>
 					<br>
 					<p class="required ">
@@ -63,9 +56,7 @@ th{
 									
 									%>
 										<th scope="row">아이디 <img src="<c:url value='/css/images/ico_required.gif'/>" alt="필수" /></th>
-										<td><input id="memberId" name="memberId" placeholder=""	value="" type="text" maxlength="16"/> (영문소문자/숫자,4~16자)
-										<span id="idGuide" style="color:#F82020"></span>	
-										
+										<td><input id="memberId" name="memberId" placeholder=""	value="${sessionID.memberId }" type="text" maxlength="16" readonly/> (영문소문자/숫자,4~16자)
 										<input type="checkbox" id="confirmCheck" name="cofirmCheck" display="none" <%=check %>>
 										 </td>
 									</tr>
@@ -105,7 +96,7 @@ th{
 									</tr>
 									<tr>
 										<th scope="row" id="memberName">이름 <img src="<c:url value='/css/images/ico_required.gif'/>" alt="필수" /></th>
-										<td><input id="memberName" name="memberName" class="inputTypeText" placeholder="" value="" type="text" />
+										<td><input id="memberName" name="memberName" class="inputTypeText" placeholder="" value="${sessionID.memberId}" type="text" readOnly />
 											<span id="under14Msg" class="displaynone">14세 미만 사용자는 법정대리인 동의가 필요합니다.</span></td>
 									</tr>
 									<tr>
@@ -122,13 +113,13 @@ th{
 										<th scope="row">주소 <img	src="<c:url value='/css/images/ico_required.gif'/>" class="" alt="필수" /></th>
 										<td><input id="postcode" name="postCode"	class="inputTypeText" placeholder="우편번호" maxlength="14" value="" type="text"/>우편번호
 											<input type="button" onclick="searChpostcode()" value="우편번호찾기" /><br/>
-											<input id="address" name="addr1"	class="inputTypeText" placeholder="주소"  type="text" />도로명주소<br/>
-											<input id="address2" name="addr2"	class="inputTypeText" placeholder="상세주소"  type="text" />지명주소</td>
-											
+											<input id="address" name="addr1"	class="inputTypeText" placeholder="주소" value="" type="text" />도로명주소<br/>
+											<input id="address2" name="addr2"	class="inputTypeText" placeholder="상세주소" value="	" type="text" />지명주소</td>
+											<span id="guide" style="color:#999"></span>	
 									</tr>
 									<tr class="">
 										<th scope="row">일반전화 <img src="<c:url value='/css/images/ico_required.gif'/>" class="displaynone" alt="필수" /></th>
-										<td><select id="phone1" name="phone1">
+										<td><select id="phone1" name="phone1" >
 												<option value="02">02</option>
 												<option value="031">031</option>
 												<option value="032">032</option>
@@ -182,7 +173,7 @@ th{
 									</tr>
 									<tr>
 										<th scope="row">이메일 <img src="<c:url value='/css/images/ico_required.gif'/>" alt="필수" /></th>
-										<td><input id="email1" name="email1" class="mailId"	value="" type="text" />@<input id="email2" name="email2" class="mailAddress" value="" type="text" />
+										<td><input id="email1" name="email1" class="mailId"	value="" type="text" readonly/>@<input id="email2" name="email2" class="mailAddress" value="" type="text" readonly />
 										<select	id="email3" onchange="chageLangSelect()">
 												<option value="" selected="selected" >- 이메일 선택 -</option>
 												<option value="naver.com">naver.com</option>
@@ -209,7 +200,7 @@ th{
 									
 								</tbody>
 							</table>
-							<input type="submit" name="join" value="회원가입" id="loginBtn">
+							<input type="submit" name="join" value="회원정보수정" id="loginBtn">
 							<input type="button" name="cancle" value="취소" id="joinBtn" onClick="location.href='<c:url value="/" />'">
 						</form>
 						<% String msg = (String)request.getAttribute("msg"); %>
@@ -243,56 +234,27 @@ th{
 	
 	
 	<script type="text/javascript"> 
+		
+		<!-- 회원정보 로드 -->
+		window.onload = function(){
+			
+			var email="${sessionID.memberEmail}";
+			var arr = email.split("@");
+			
+			document.getElementById("email1").value=arr[0];
+			document.getElementById("email2").value=arr[1];
+			
+		}
+		
 	
-	 var idcheck=0;
-	 // id포커스아웃인경우 - id유효성 검사
-   	 $('#memberId').focusout(function(){
-        
-   		 // 사용자로부터 입력받은 아이디 추출
-   		 var userId = $('#memberId').val();
-   		 
-   		 $.ajax({
-             async: true,
-             type : 'POST',
-             data : userId,
-             url : "<c:url value='/member/idCheck' />",
-             dataType : "json",
-             contentType: "application/json; charset=UTF-8",
-             success : function(data) {
-                 if (data.cnt > 0) {
-                     
-                     alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
-                     
-                     //아이디가 존제할 경우 빨깡으로
-                     $("#idGuide").text("사용할수없는 아이디입니다.")
-                                     
-                 
-                 } else {
-                     alert("사용가능한 아이디입니다.");
-                     
-                     //아이디가 존재하지 않는 경우면 초록
-                	 $("#idGuide").text("사용할수없는 아이디입니다.")
-                    
-                     //아이디가 중복하지 않으면  idck = 1 
-                     idck = 1;
-                     
-                 }
-             },
-             error : function(error) {
-                 
-                 alert("error : " + error);
-             }
-         });
-   	 });
-      
-   		  	
+	
 		<!-- 나이에 숫자만 오도록 입력 -->
 		function numkeyCheck(e) { 
 			var keyValue = event.keyCode; if( ((keyValue >= 48) && (keyValue <= 57)) ) return true; 
 			else return false; 
 		}
 		
-	//	<!-- 메일선택시 mail2란에 입력채움 -->
+		//	<!-- 메일선택시 mail2란에 입력채움 -->
 		function chageLangSelect(){
 		    var select = document.getElementById("email3");
 		     
@@ -372,7 +334,6 @@ th{
 		            }
 		        }).open();
 		    }
-   	 
 		
 	</script>
 

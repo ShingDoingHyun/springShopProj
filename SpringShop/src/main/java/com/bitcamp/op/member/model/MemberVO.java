@@ -1,5 +1,7 @@
 package com.bitcamp.op.member.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MemberVO {
 
 	private int memberNo;
@@ -19,6 +21,8 @@ public class MemberVO {
 	private String email1;
 	private String email2;
 	private String memberEmail;
+	private MultipartFile photoFile;
+	private String imgContext;
 		
 	
 	public String getPhone1() {
@@ -135,6 +139,18 @@ public class MemberVO {
 		
 	}
 	
+	public MultipartFile getPhotoFile() {
+		return photoFile;
+	}
+	public void setPhotoFile(MultipartFile photoFile) {
+		this.photoFile = photoFile;
+	}
+	public String getImgContext() {
+		return imgContext;
+	}
+	public void setImgContext(String imgContext) {
+		this.imgContext = imgContext;
+	}
 	public void generatePhone() {
 		
 		this.memberPhone=this.phone1+")"+this.phone2+this.phone3;
@@ -149,6 +165,7 @@ public class MemberVO {
 		this.memberEmail = this.email1 +"@"+this.email2;
 		
 	}
+	
 	
 	
 	

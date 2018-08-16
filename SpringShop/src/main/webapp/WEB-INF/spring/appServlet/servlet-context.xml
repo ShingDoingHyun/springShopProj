@@ -63,7 +63,7 @@
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="defaultEncoding">
-			<beans:value>utf-8</beans:value>
+		<beans:value>utf-8</beans:value>
 		</beans:property>
 	</beans:bean>
 		
@@ -103,8 +103,12 @@
 	<beans:bean id="memberLoginService" class="com.bitcamp.op.member.service.MemberLoginService"/>
 	<!-- ★회원가입 서비스 빈 등록 -->
 	<beans:bean id="memberRegService" class="com.bitcamp.op.member.service.MemberRegService"/>
+	<!-- ★회원정보수정 서비스 빈 등록 -->
+	<beans:bean id="memberModifyService" class="com.bitcamp.op.member.service.MemberModifyService"/>
+	<!-- ★비밀번호 암호화 빈 등록  -->
+	<beans:bean id="messageDigest" class="com.bitcamp.op.security.MessageDigest.Sha256"/>
 	
-    <!-- 카트 삭제 서비스 빈 등록 -->
+	<!-- 카트 삭제 서비스 빈 등록 -->
 	<beans:bean id="deleteAllCartService"
 		class="com.bitcamp.op.cart.service.DeleteAllCartService" />
     <!-- 카트 삽입 서비스 빈 등록 -->

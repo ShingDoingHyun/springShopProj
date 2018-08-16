@@ -11,19 +11,18 @@ import com.bitcamp.op.member.dao.MemberDaoInterface;
 import com.bitcamp.op.member.model.MemberVO;
 import com.bitcamp.op.security.MessageDigest.Sha256;
 
-public class MemberRegService {
+public class MemberModifyService {
 
-	// Spring + Mybatics : 자동매퍼 생성 기능을 이용한 DAO 구현
 	@Autowired
 	SqlSessionTemplate template;
 	
 	@Autowired
 	Sha256 sha256;
-
+	
 	private MemberDaoInterface memberDao;
-
-	public int insertMember(MemberVO memberVo, HttpServletRequest request) throws Exception {
-
+	
+	public int updateMember(MemberVO memberVo, HttpServletRequest request) throws Exception{
+		
 		int result;
 
 		memberDao = template.getMapper(MemberDaoInterface.class);
@@ -63,26 +62,14 @@ public class MemberRegService {
 		// 받은 패스워드를 암호화 처리
 		memberVo.setMemberPwd(sha256.encrypt(memberVo.getMemberPwd()));
 
-		result = memberDao.insertMember(memberVo);
+		result = memberDao.updateMember(memberVo);
 
 		return result;
 
-	}
-	
-	
-	//id 조회
-	public int idcheck(String userId) {
-		
-		int result = 0;
-		System.out.println("서비스 여기까지1");
-		System.out.println("userId는"+userId);
-		result = memberDao.idCheck(userId);
-		System.out.println("result:" + result);
-		
-		return result;
 		
 		
 	}
 	
-
+	
+	
 }

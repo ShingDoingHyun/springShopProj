@@ -23,9 +23,23 @@
 	<!-- 회원가입 -->
 	<insert id="insertMember" useGeneratedKeys="true"  keyProperty="memberNo"
 			 parameterType="com.bitcamp.op.member.model.MemberVO" >
-		insert into member (memberId, memberPwd, memberName, memberAge, memberGender, memberPhone, memberAdress, memberEmail )
-		values(#{memberId}, #{memberPwd}, #{memberName}, #{memberAge}, #{memberGender}, #{memberPhone}, #{memberAdress}, #{memberEmail} )
+		insert into member (memberId, memberPwd, memberName, memberAge, memberGender, memberPhone, memberAdress, memberEmail, imgContext )
+		values(#{memberId}, #{memberPwd}, #{memberName}, #{memberAge}, #{memberGender}, #{memberPhone}, #{memberAdress}, #{memberEmail}, #{imgContext} )
 	</insert>
+	
+	<!-- 회원정보수정 -->
+	<update id="updateMember" parameterType="com.bitcamp.op.member.model.MemberVO"   >
+		update member set memberPwd=#{memberPwd}, memberAge=#{memberAge}, memberGender= #{memberGender}, 
+			   memberPhone=#{memberPhone}, memberAdress=#{memberAdress}, imgContext=#{imgContext}
+			   where memberId = #{memberId}
+	</update>
+	
+	<!-- id 중복체크 -->
+	<select id="idCheck" parameterType="String" resultType="Integer" >
+	
+		select count(*) from member where id=#{userId}
+	
+	</select> 
 	
 
 </mapper>
