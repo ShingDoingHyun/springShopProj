@@ -74,6 +74,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if> 
 		where productNo=#{productNo}
 	</update>
+	
+	
+	<delete id="deleteProduct" parameterType="int">
+		delete from product where productNo = #{productNo}
+	</delete>
 
 
 	<resultMap id="userResultMap"

@@ -55,13 +55,20 @@ img {
 								<td>
 									<p style='text-align: center'>${productDTO.productPrice}￦</p>
 								</td>
-								<td ><a href="/op/product/productUpdate/${productDTO.productNo}">수정</a>  / <a href="/product/productDelete/${productDTO.productNo}">삭제</a></td>
+								<td ><a href="<c:url value='/product/productUpdate/${productDTO.productNo}'/>">수정</a>  / <a href="<c:url value='/product/productDelete/${productDTO.productNo}'/>">삭제</a></td>
 							</tr>
 						</c:forEach>
 
 						<tr height="50"><td colspan="4"><center><a href="/op/product/productAdd">상품추가</a></center></td></tr>
 					</table>
-
+					
+					<p style='text-align: center'>
+					<c:forEach begin="1" end="${product.pageTotalCount }" var="i">
+						<a href="<c:url value='/product/productAdminList?page=${ i}'/>"
+							style="display: inline;">${ i}</a>
+					</c:forEach>
+					<br>
+				</p>
 
 					<div class="cl">&nbsp;</div>
 				</div>
