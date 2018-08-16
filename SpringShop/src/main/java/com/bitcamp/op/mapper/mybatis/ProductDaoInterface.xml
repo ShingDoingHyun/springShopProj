@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.bitcamp.op.product.dao.ProductDaoInterface">
+
+	<!-- 상품 리스트 출력 -->
+	<select id="selectList" resultMap="userResultMap">
+		select * from product
+		<where>
+			<if test="keyword != null">
+				productName like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="category !=null and category != ''">
+				and productType like #{category}
+			</if>
+			<if test="row_price != 0">
+				and  <![CDATA[  productPrice >= #{row_price} ]]>
+			</if>
+			<if test="high_price != 0">
+				and  <![CDATA[  productPrice <= #{high_price} ]]>
+			</if>
+		</where>
+		order by productNo desc
+
+		limit
+		#{firstRow}, #{endRow}
+
+	</select>
+
+	<!-- 상품 전체 수량 출력 -->
+	<select id="selectCount" resultType="int">
+		select count(*) from product
+		<where>
+			<if test="keyword != null">
+				productName like CONCAT('%',#{keyword},'%')
+			</if>
+			<if test="category !=null and category != ''">
+				and productType like #{category}
+			</if>
+			<if test="row_price != 0">
+				and  <![CDATA[  productPrice >= #{row_price} ]]>
+			</if>
+			<if test="high_price != 0">
+				and  <![CDATA[  productPrice <= #{high_price} ]]>
+			</if>
+		</where>
+	</select>
+	
+	
+	<!-- 상품 번호로 해당 상품 출력 -->
+	<select id="selectProduct"
+		resultType="com.bitcamp.op.product.model.ProductDTO">
+		select * from product where productNo= #{productNo}
+	</select>
+
+	<!-- 상품 읿력 -->
+	<insert id="insertProduct"
+		parameterType="com.bitcamp.op.product.model.ProductDTO">
+		insert into product (productName, productDetail,
+		productImage , productType, productPrice )
+		values (#{productName}, #{productDetail}, #{productImage}, #{productType},
+		#{productPrice} )
+	</insert>
+	
+	
+	<update id="updateProduct" parameterType="com.bitcamp.op.product.model.ProductDTO">
+	
+		update product set productName=#{productName}, productDetail=#{productDetail}, productType=#{productType},  productPrice=#{productPrice}
+		<if test="productImage != null and productImage != ''">
+			, productImage=#{productImage}
+		</if> 
+		where productNo=#{productNo}
+	</update>
+
+
+	<resultMap id="userResultMap"
+		type="com.bitcamp.op.product.model.ProductDTO" />
+</mapper>

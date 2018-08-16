@@ -1,0 +1,53 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!-- Sidebar -->
+    <div id="sidebar">
+      <!-- Search -->
+      <div class="box search">
+        <h2>Search by <span></span></h2>
+        <div class="box-content">
+          <form action="/op/product/productList" method="get">
+            <label>Keyword</label>
+            <input type="hidden" />
+            <input type="text" class="field" name="keyword" value="${param.keyword}"/>
+            <label>Category</label>
+            <select class="field" name="category">
+            <!-- 헤더에서 불러옴 에러아님 -->
+              <option value="" ${param.category == "" ? "selected" : " "}>-- 전체 카테고리 --</option>
+              <option value="men"  ${param.category == "men" ? "selected" : " "} >-- 남성복 --</option>
+              <option value="women"  ${param.category == "women" ? "selected" : " "} >-- 여성복 --</option>
+            </select>
+            <div class="inline-field">
+              <label>Price</label>
+              <select class="field small-field" name="row_price">
+              <option value="10000" ${param.row_price == "10000" ? "selected" : " "} >10000</option>
+                <option value="50000" ${param.row_price == "50000" ? "selected" : " "} >50000</option>
+                <option value="100000"  ${param.row_price == "100000" ? "selected" : " "} >100000</option>
+              </select>
+              <label>to:</label>
+              <select class="field small-field" name="high_price">
+               <option value="100000" ${param.high_price == "100000" ? "selected" : " "}>100000</option>
+                <option value="150000"  ${param.high_price == "150000" ? "selected" : " "}>150000</option>
+                <option value="200000" ${param.high_price == "200000" ? "selected" : " "}>200000</option>
+              </select>
+            </div>
+            <input type="submit" class="search-submit" value="Search" />
+          </form>
+        </div>
+      </div>
+      <!-- End Search -->
+      <!-- Categories -->
+      <div class="box categories">
+        <h2>Categories <span></span></h2>
+        <div class="box-content">
+          <ul>
+          <li><a href="/op/product/productList">전체상품</a></li>
+            <li><a href="/op/product/productList?category=men">남성복</a></li>
+            <li><a href="/op/product/productList?category=women">여성복</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- End Categories -->
+    </div>
+    
+    <!-- End Sidebar -->

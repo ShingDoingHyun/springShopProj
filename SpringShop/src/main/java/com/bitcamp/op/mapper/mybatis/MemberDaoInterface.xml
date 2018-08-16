@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.bitcamp.op.member.dao.MemberDaoInterface">
+	
+	<!-- 이메일 찾기 -->
+	<select id="findIdByEmail" resultType="com.bitcamp.op.member.model.MemberVO">
+		select * from member where memberEmail = #{email}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="findPw" resultType="com.bitcamp.op.member.model.MemberVO">
+		select * from member where memberId = #{id}
+	</select>
+	
+	<!-- 로그인(아이디검색) -->
+	<select id="selectById" resultType="com.bitcamp.op.member.model.MemberVO">
+		select * from member where memberId=#{id}
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="insertMember" useGeneratedKeys="true"  keyProperty="memberNo"
+			 parameterType="com.bitcamp.op.member.model.MemberVO" >
+		insert into member (memberId, memberPwd, memberName, memberAge, memberGender, memberPhone, memberAdress, memberEmail )
+		values(#{memberId}, #{memberPwd}, #{memberName}, #{memberAge}, #{memberGender}, #{memberPhone}, #{memberAdress}, #{memberEmail} )
+	</insert>
+	
+
+</mapper>
