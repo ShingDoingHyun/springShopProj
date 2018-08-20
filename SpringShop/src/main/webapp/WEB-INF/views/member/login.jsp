@@ -27,7 +27,7 @@
     	
     	<% String msg = (String)request.getAttribute("msg"); %>
         <% if(msg != null) {%>
-        	<p id="msg"><%=msg %></p>
+        	<p id="msg" style="color:red;"><%=msg %></p>
         <% } else {  %>
     		<p id = "msg"> &nbsp; </p>
     	<% } %>

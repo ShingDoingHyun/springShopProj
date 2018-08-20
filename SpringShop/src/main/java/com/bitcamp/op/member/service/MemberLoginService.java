@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bitcamp.op.member.controller.LoginRequest;
 import com.bitcamp.op.member.dao.MemberDaoInterface;
 import com.bitcamp.op.member.model.MemberVO;
+import com.bitcamp.op.security.MessageDigest.Sha256;
 
 
 public class MemberLoginService {
@@ -17,6 +18,9 @@ public class MemberLoginService {
 	// Spring + Mybatics : 자동매퍼 생성 기능을 이용한 DAO 구현
 	@Autowired
 	SqlSessionTemplate template;
+	
+	@Autowired
+	Sha256 sha256;
 	
 	private MemberDaoInterface memberDao;
 	
@@ -35,9 +39,16 @@ public class MemberLoginService {
 		
 		
 		// 로그인 성공시 세션 성립
-		if(memberVo != null && memberVo.isMatchPassword(loginRequest.getPwd())) {
+		if(memberVo != null && memberVo.isMatchPassword(sha256.encrypt(loginRequest.getPwd()))) {
 			
+			// 세션성립전 패스워드 지우기
+			memberVo.setMemberPwd("");
+			
+			// 세션성립
 			session.setAttribute("sessionID", memberVo);
+			
+			//테스트 코드
+			System.out.println(memberVo.getMemberAdress());
 			
 			return true;
 		}

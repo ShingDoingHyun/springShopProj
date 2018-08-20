@@ -41,7 +41,7 @@
 				background-size: 100%">
 			</div>
 			
-			<table width="80%" style="margin:auto;">
+			<table width="100%" style="margin:auto;">
 				<tr>
 					<td>회원번호</td>
 					<td>${sessionID.memberNo}</td>
@@ -59,7 +59,8 @@
 					<td>${sessionID.memberAdress}</td>
 				</tr>
 			</table>
-			<a href="<c:url value='/member/modify' />" style="float:right;">회원정보수정</a>     
+			<br/>
+			<a  href="<c:url value='/member/modify' />" style="float:right;">회원정보수정</a>     
 		</div>
     	
           

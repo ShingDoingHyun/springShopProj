@@ -23,7 +23,7 @@ public class MemberFindPwController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String findPw(@RequestParam("id") String id, @RequestParam("email") String email, Model model) {
+	public String findPw(@RequestParam("id") String id, @RequestParam("email") String email, Model model) throws Exception {
 		
 		String resultMsg = memberFindPwService.findPwResultMsg(id, email);
 		

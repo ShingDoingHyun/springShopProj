@@ -20,7 +20,8 @@ public class MemberRegService {
 	@Autowired
 	Sha256 sha256;
 
-	private MemberDaoInterface memberDao;
+	
+	private MemberDaoInterface memberDao; // = template.getMapper(MemberDaoInterface.class);
 
 	public int insertMember(MemberVO memberVo, HttpServletRequest request) throws Exception {
 
@@ -71,13 +72,16 @@ public class MemberRegService {
 	
 	
 	//id 조회
-	public int idcheck(String userId) {
+	public int idCheck(String userId) {
+				
+		int result;
+		memberDao = template.getMapper(MemberDaoInterface.class);
 		
-		int result = 0;
-		System.out.println("서비스 여기까지1");
-		System.out.println("userId는"+userId);
+		System.out.println("userId는 "+userId);
+	
 		result = memberDao.idCheck(userId);
-		System.out.println("result:" + result);
+				
+		System.out.println("reult :"+ result);
 		
 		return result;
 		

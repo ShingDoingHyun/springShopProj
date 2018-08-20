@@ -54,7 +54,7 @@ th{
 					</p>
 					<br>
 					<div class="boardWrite">
-						<form method="post" enctype="multipart/form-data">
+						<form id ="joinForm" method="post" enctype="multipart/form-data">
 							<table summary="">
 								<tbody>
 									<tr>
@@ -64,7 +64,7 @@ th{
 									%>
 										<th scope="row">아이디 <img src="<c:url value='/css/images/ico_required.gif'/>" alt="필수" /></th>
 										<td><input id="memberId" name="memberId" placeholder=""	value="" type="text" maxlength="16"/> (영문소문자/숫자,4~16자)
-										<span id="idGuide" style="color:#F82020"></span>	
+										<span id="idGuide"></span>	
 										
 										<input type="checkbox" id="confirmCheck" name="cofirmCheck" display="none" <%=check %>>
 										 </td>
@@ -209,7 +209,7 @@ th{
 									
 								</tbody>
 							</table>
-							<input type="submit" name="join" value="회원가입" id="loginBtn">
+							<input type="button" name="join" value="회원가입" id="loginBtn" onClick="reg()">
 							<input type="button" name="cancle" value="취소" id="joinBtn" onClick="location.href='<c:url value="/" />'">
 						</form>
 						<% String msg = (String)request.getAttribute("msg"); %>
@@ -240,14 +240,13 @@ th{
 		<!-- End Footer -->
 	</div>
 	<!-- End Shell -->
-	
-	
+		
 	<script type="text/javascript"> 
 	
 	 var idcheck=0;
 	 // id포커스아웃인경우 - id유효성 검사
    	 $('#memberId').focusout(function(){
-        
+
    		 // 사용자로부터 입력받은 아이디 추출
    		 var userId = $('#memberId').val();
    		 
@@ -255,26 +254,27 @@ th{
              async: true,
              type : 'POST',
              data : userId,
-             url : "<c:url value='/member/idCheck' />",
+             url : "<c:url value='/member/idCheck'/>",
              dataType : "json",
              contentType: "application/json; charset=UTF-8",
              success : function(data) {
                  if (data.cnt > 0) {
                      
-                     alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
+                    // alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
                      
                      //아이디가 존제할 경우 빨깡으로
-                     $("#idGuide").text("사용할수없는 아이디입니다.")
-                                     
-                 
+                     $("#idGuide").text("사용할 수 없는 아이디입니다.")
+                     $("#idGuide").css("color","red");
+                                               
                  } else {
-                     alert("사용가능한 아이디입니다.");
+                     //alert("사용가능한 아이디입니다.");
                      
                      //아이디가 존재하지 않는 경우면 초록
-                	 $("#idGuide").text("사용할수없는 아이디입니다.")
+                	 $("#idGuide").text("사용할 수 있는 아이디입니다.")
+                	 $("#idGuide").css("color","green");
                     
                      //아이디가 중복하지 않으면  idck = 1 
-                     idck = 1;
+                     idcheck = 1;
                      
                  }
              },
@@ -282,10 +282,23 @@ th{
                  
                  alert("error : " + error);
              }
-         });
-   	 });
-      
-   		  	
+       	  });
+   	});
+	 
+		function reg(){
+			
+			if(idcheck==0){
+				alert("id중복체크를 해주세요");
+			}
+			else{
+				alert(idcheck);
+				$('#joinForm').submit();	
+				
+			}
+					
+		} 
+	 	
+         		  	
 		<!-- 나이에 숫자만 오도록 입력 -->
 		function numkeyCheck(e) { 
 			var keyValue = event.keyCode; if( ((keyValue >= 48) && (keyValue <= 57)) ) return true; 
