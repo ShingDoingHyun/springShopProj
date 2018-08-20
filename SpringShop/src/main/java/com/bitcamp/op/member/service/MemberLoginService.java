@@ -19,6 +19,7 @@ public class MemberLoginService {
 	@Autowired
 	SqlSessionTemplate template;
 	
+	//비밀번호 암호화 후 비교
 	@Autowired
 	Sha256 sha256;
 	

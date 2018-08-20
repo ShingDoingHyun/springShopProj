@@ -27,7 +27,11 @@
         <li><a href="<c:url value='/member/logout'/>">Logout</a></li>
         <% } %>
         
+<<<<<<< HEAD
         <li><a href="<c:url value='/member/mypage'/>">My Account</a></li>
+=======
+        <li><a href="<c:url value='/member/reg'/>">My Account</a></li>
+>>>>>>> branch 'master' of https://github.com/ShingDoingHyun/springShopProj
         <li><a href="<c:url value='/product/productList'/>">The Store</a></li>
         <li><a href="<c:url value='/contact'/>">Contact</a></li>
       </ul>

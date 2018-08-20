@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bitcamp.op.product.model.ProductDTO;
 import com.bitcamp.op.product.service.ProductAddService;
+import com.bitcamp.op.product.service.ProductDeleteService;
 import com.bitcamp.op.product.service.ProductListService;
 import com.bitcamp.op.product.service.ProductSelectService;
 import com.bitcamp.op.product.service.ProductUpdateService;
@@ -31,6 +32,9 @@ public class ProductController {
 	
 	@Autowired
 	ProductUpdateService productUpdateService;
+	
+	@Autowired
+	ProductDeleteService productDeleteService;
 	
 	
 	//사용자 영역
@@ -110,10 +114,10 @@ public class ProductController {
 	
 	
 	//관리자 상품 삭제
-	@RequestMapping(value = "/product/productDelete")
-	public String productDelete() {
+	@RequestMapping(value = "/product/productDelete/{productNo}")
+	public String productDelete(@PathVariable("productNo") int productNo) {
 		
-		
+		productDeleteService.deleteProduct(productNo);
 		return "redirect:/product/productAdminList";
 	}
 	
