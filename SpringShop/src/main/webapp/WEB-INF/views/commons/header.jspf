@@ -26,10 +26,12 @@
 		<% }else { %>        
         <li><a href="<c:url value='/member/logout'/>">Logout</a></li>
         <% } %>
-        
-
-        <li><a href="<c:url value='/member/mypage'/>">My Account</a></li>
-        <li><a href="<c:url value='/member/reg'/>">My Account</a></li>
+	 	<% if(sessionID == null){  %>
+	    <li><a href="<c:url value='/member/reg'/>">My Account</a></li>
+	    <% }else { %>  
+        <li>
+        <a href="<c:url value='/member/mypage'/>">My Account</a></li>
+        <% } %>
         <li><a href="<c:url value='/product/productList'/>">The Store</a></li>
         <li><a href="<c:url value='/contact'/>">Contact</a></li>
       </ul>
